@@ -40,11 +40,11 @@
     $serviceName = substr($f_serv_output, 0, strpos($f_serv_output, ":"));
     $subject = "[CENTREON] $f_notify_type $f_host_name/$f_serv_desc [$f_serv_state]";
 
-    $url = "MyIp";  //to change
-    $userName = "MyUserNameForAutoLogin"; //to change
-    $token = "MytokenForAutoLogin";  //to change
+    $url = "MyIp";  
+    $userName = "MyUserNameForAutoLogin"; 
+    $token = "MytokenForAutoLogin";  
 
-    $from = "centreon@WhatIwant";   //to change
+    $from = "centreon@WhatIwant";   
     $body = "<html><body><table border=0 width='98%' cellpadding=0 cellspacing=0><tr><td valign='top'>\n";
     $body .= "<table border=0 cellpadding=0 cellspacing=0 width='98%'>";
     $body .= "<tr bgcolor=$f_color><td width='140'><b><font color=#ffffff>Notification:</font></b></td><td><font ";
