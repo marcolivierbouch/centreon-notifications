@@ -8,9 +8,11 @@ centreon-notifications
 1. Download the scripts in the plugins directory and modify these following variables :
     * $url : URL of the Centreon Web UI ( eg. https://centreon.foo.bar:8081 )
     * $from : from email address desired
+    * $userName : user name for auto login
+    * $token : token for auto login http://blog.centreon.com/connexion-automatique-a-linterface-centreon-autologin/?lang=fr
 2. Make the files executable.
 3. On distributed platform, don't miss to install php on your pollers
-4. Change the command line for host-notify-by-email and service-notify-by-email notification's command :
+4. Change the command line for host-notify-by-email and service-notify-by-email notification's command for the last parameter you can put admin or user there is less information when for a normal user:
     * `$USER1$/host-email.php "$NOTIFICATIONTYPE$" "$HOSTNAME$" "$HOSTALIAS$" "$HOSTSTATE$" "$HOSTADDRESS$" "$HOSTOUTPUT$" "$LONGDATETIME$" "$SERVICEDESC$" "$SERVICESTATE$" "$CONTACTEMAIL$" "$TOTALHOSTSUP$" "$TOTALHOSTSDOWN$" "$HOSTACKAUTHOR$" "$HOSTACKCOMMENT$" "admin"`
     * `$USER1$/service-email.php "$NOTIFICATIONTYPE$" "$HOSTNAME$" "$HOSTALIAS$" "$HOSTSTATE$" "$HOSTADDRESS$" "$SERVICEOUTPUT$" "$LONGDATETIME$" "$SERVICEDESC$" "$SERVICESTATE$" "$CONTACTEMAIL$" "$SERVICEDURATIONSEC$" "$SERVICEEXECUTIONTIME$" "$TOTALSERVICESWARNING$" "$TOTALSERVICESCRITICAL$" "$TOTALSERVICESUNKNOWN$" "$LASTSERVICEOK$" "$LASTSERVICEWARNING$" "$SERVICENOTIFICATIONNUMBER$" "$SERVICEACKAUTHOR$" "$SERVICEACKCOMMENT$" "admin"`
 5. Generate, move and export the new configuration on your all pollers
