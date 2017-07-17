@@ -23,13 +23,13 @@
     if($f_host_state=="DOWN") {$f_color="#f40000";}
     if($f_host_state=="UP") {$f_color="#00b71a";}
 
-    $userName = 'MyUserNameForAutoLogin'; //to change
-    $token = 'MyTokenForAutoLogin'; //to change
-    $url = "MyIp";  // to change
+    $userName = 'MyUserNameForAutoLogin'; 
+    $token = 'MyTokenForAutoLogin'; 
+    $url = "MyIp";  
 
     $subject = "[CENTREON] $f_notify_type Host:$f_host_name";
 
-    $from = "centreon@WhatIwWant"; //to change
+    $from = "centreon@WhatIwWant"; 
     $body = "<html><body><table border=0 width='98%' cellpadding=0 cellspacing=0><tr><td valign='top'>\n";
     $body .= "<table border=0 cellpadding=0 cellspacing=0 width='98%'>\n";
     $body .= "<tr bgcolor=$f_color><td width='140'><b><font color=#ffffff>Host: </font></b></td><td><font color=#ffffff><b> $f_notify_type [$f_host_state]</b></font></td></tr> \n";
