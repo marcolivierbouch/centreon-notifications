@@ -10,7 +10,7 @@ centreon-notifications
     * $from : from email address desired
     * $userNameForDB : user name for connection
     * $passwordForDB : password for connection
-2. Create token for auto login for all users http://blog.centreon.com/connexion-automatique-a-linterface-centreon-autologin/?lang=fr
+2. Create auto login token for all users http://blog.centreon.com/connexion-automatique-a-linterface-centreon-autologin/?lang=fr
 3. Make the files executable.
 4. On distributed platform, don't miss to install php on your pollers
 5. Change the command line for host-notify-by-email and service-notify-by-email notification's command for the last parameter you can put admin or user there is less information when for a normal user:
