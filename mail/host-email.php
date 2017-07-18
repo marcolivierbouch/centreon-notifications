@@ -20,9 +20,9 @@
     $userAlias = array_shift($argv);
     $userType = array_shift($argv);
 
-    if($f_host_state=="RECOVERY") {$f_color="#f48400";}
-    if($f_host_state=="DOWN") {$f_color="#f40000";}
-    if($f_host_state=="UP") {$f_color="#00b71a";}
+    if($f_host_state == "RECOVERY") {$f_color = "#f48400";}
+    if($f_host_state == "DOWN") {$f_color = "#f40000";}
+    if($f_host_state == "UP") {$f_color = "#00b71a";}
 
     $serverNameOfDB = "127.0.0.1";
     $userNameForDB = "MyUser";
@@ -48,13 +48,13 @@
     if($f_ackauthor!="" && $f_ackcomment!=""){
         $body .= "<tr bgcolor=$f_color><td width='140'><b><font color=#ffffff>$f_ackauthor:</font></b></td><td><font color=#ffffff><b>$f_ackcomment</b></font></td></tr>\n";
     }
-    $body .= "<tr bgcolor=#eeeeee><td><b>Nom de l'Hôte: </b></td><td><b><a href='$url/centreon/main.php?p=20202&o=hd&host_name=$f_host_name&autologin=1&useralias=$userAlias&token=$token'>$f_host_alias</a></b></td></tr>\n";
-    $body .= "<tr bgcolor=#fefefe><td><b>Adresse IP: </b></td><td><b>$f_host_address</b></td></tr>\n";
-    $body .= "<tr bgcolor=#eeeeee><td><b>Date/Temps: </b></td><td>$f_long_date</td></tr>\n";
-    $body .= "<tr bgcolor=#fefefe><td><b>Informations: </b></td><td><font color=$f_color>$f_host_output</font></td></tr>\n";
+    $body .= "<tr bgcolor=#eeeeee><td><b>Hostname: </b></td><td><b><a href='$url/centreon/main.php?p=20202&o=hd&host_name=$f_host_name&autologin=1&useralias=$userAlias&token=$token'>$f_host_alias</a></b></td></tr>\n";
+    $body .= "<tr bgcolor=#fefefe><td><b>Address: </b></td><td><b>$f_host_address</b></td></tr>\n";
+    $body .= "<tr bgcolor=#eeeeee><td><b>Date/Time: </b></td><td>$f_long_date</td></tr>\n";
+    $body .= "<tr bgcolor=#fefefe><td><b>Info: </b></td><td><font color=$f_color>$f_host_output</font></td></tr>\n";
     if ($userType == "admin"){
-        $body .= "<tr bgcolor=#eeeeee><td><b>Totale d'hôtes Ok: </b></td><td>$f_totalup</td></tr>\n";
-        $body .= "<tr bgcolor=#fefefe><td><b>Totale d'hôtes Indisponibles: </b></td><td>$f_totaldown</td></tr>\n";
+        $body .= "<tr bgcolor=#eeeeee><td><b>Total hosts Up: </b></td><td>$f_totalup</td></tr>\n";
+        $body .= "<tr bgcolor=#fefefe><td><b>Total hosts Down: </b></td><td>$f_totaldown</td></tr>\n";
     }
     $body .= "<tr bgcolor=#eeeeee><td><b>Actions: </b></td><td><a href='$url/centreon/main.php?p=20202&o=hd&host_name=$f_host_name&cmd=72&select[$f_host_name]=1&autologin=1&useralias=$userAlias&token=$token'><b>Acknowledge</b></a></td></tr>\n";
     $body .= "</table></body></html> \n";
