@@ -3,20 +3,20 @@
 <?php
 
     array_shift($argv);
-    $f_notify_type =array_shift($argv);
-    $f_host_name =array_shift($argv);
-    $f_host_alias =array_shift($argv);
-    $f_host_state =array_shift($argv);
-    $f_host_address =array_shift($argv);
-    $f_host_output =array_shift($argv);
-    $f_long_date =array_shift($argv);
-    $f_serv_desc  =array_shift($argv);
-    $f_serv_state  =array_shift($argv);
-    $f_to  =array_shift($argv);
-    $f_totalup  =array_shift($argv);
-    $f_totaldown=array_shift($argv);
-    $f_ackauthor= array_shift($argv);
-    $f_ackcomment= array_shift($argv);
+    $f_notify_type = array_shift($argv);
+    $f_host_name = array_shift($argv);
+    $f_host_alias = array_shift($argv);
+    $f_host_state = array_shift($argv);
+    $f_host_address = array_shift($argv);
+    $f_host_output = array_shift($argv);
+    $f_long_date = array_shift($argv);
+    $f_serv_desc = array_shift($argv);
+    $f_serv_state = array_shift($argv);
+    $f_to = array_shift($argv);
+    $f_totalup = array_shift($argv);
+    $f_totaldown = array_shift($argv);
+    $f_ackauthor = array_shift($argv);
+    $f_ackcomment = array_shift($argv);
     $userAlias = array_shift($argv);
     $userType = array_shift($argv);
 
