@@ -1,4 +1,4 @@
-#!/usr/bin/php -c /etc/php.ini
+﻿#!/usr/bin/php -c /etc/php.ini
 
 <?php
 
@@ -23,7 +23,8 @@
     $f_attempts= array_shift($argv);     /*18*/
     $f_ackauthor= array_shift($argv);     /*19*/
     $f_ackcomment= array_shift($argv);     /*20*/
-    $userType = array_shift($argv);      //21
+    $userAlias = array_shift($argv);     //21
+    $userType = array_shift($argv);     //22
 
     $f_downwarn = $f_duration;
     $f_color="#dddddd";
@@ -31,6 +32,22 @@
     if($f_serv_state=="CRITICAL") {$f_color="#f40000";}
     if($f_serv_state=="OK") {$f_color="#00b71a";}
     if($f_serv_state=="UNKNOWN") {$f_color="#cc00de";}
+    
+    $serverNameOfDB = "127.0.0.1";
+    $userNameForDB = "MyUser";
+    $passwordForDB = "MyPass";
+    $dbName = "centreon";
+    $url = "MyIP";
+    $from = "centreon@WhatIwant";
+   
+    $connection = new mysqli($serverNameOfDB, $userNameForDB, $passwordForDB, $dbName);
+    if ($connection->connect_error) {
+        die("Connection failed: " . $connection->connect_error);
+    } 
+    $sql = "SELECT contact_autologin_key FROM contact WHERE contact_alias = '$userAlias';";
+    $result = $connection->query($sql);
+    $row = $result->fetch_assoc();
+    $token = $row["contact_autologin_key"];
 
     $f_serv_output = str_replace("(","/",$f_serv_output);
     $f_serv_output = str_replace(")","/",$f_serv_output);
@@ -39,12 +56,6 @@
 
     $serviceName = substr($f_serv_output, 0, strpos($f_serv_output, ":"));
     $subject = "[CENTREON] $f_notify_type $f_host_name/$f_serv_desc [$f_serv_state]";
-
-    $url = "MyIp";  
-    $userName = "MyUserNameForAutoLogin"; 
-    $token = "MytokenForAutoLogin";  
-
-    $from = "centreon@WhatIwant";   
     $body = "<html><body><table border=0 width='98%' cellpadding=0 cellspacing=0><tr><td valign='top'>\n";
     $body .= "<table border=0 cellpadding=0 cellspacing=0 width='98%'>";
     $body .= "<tr bgcolor=$f_color><td width='140'><b><font color=#ffffff>Notification:</font></b></td><td><font ";
@@ -52,19 +63,19 @@
     if($f_ackauthor!="" && $f_ackcomment!=""){
         $body .= "<tr bgcolor=$f_color><td width='140'><b><font color=#ffffff>$f_ackauthor:</font></b></td><td><font color=#ffffff><b>$f_ackcomment</b></font></td></tr>\n";
     }
-    $body .= "<tr bgcolor=#eeeeee><td><b>Service:</b></td><td><font color=#0000CC><b><a href='$url/centreon/main.php?p=20201&o=svcd&host_name=$f_host_name&service_description=$f_serv_desc'>$f_serv_desc</a></b></font></td></tr>\n";
-    $body .= "<tr bgcolor=#fefefe><td><b>Host:</b></td><td><font color=#0000CC><b><a href='$url/centreon/main.php?p=20202&o=hd&host_name=$f_host_name'>$f_host_alias</a></b></td></tr>\n";
-    $body .= "<tr bgcolor=#fefefe><td><b>Address:</b></td><td><b>$f_host_address</b></font></td></tr>\n";
-    $body .= "<tr bgcolor=#eeeeee><td><b>Date/Time:</b></td><td>$f_long_date UTC</td></tr>\n";
-    $body .= "<tr bgcolor=#fefefe><td><b>Additional Info:</b></td><td><font color=$f_color>$f_serv_output</font></td></tr>\n";
-    $body .= "<tr bgcolor=#eeeeee><td><b>Commands:</b></td><td><a target='external' href='$url/centreon/main.php?p=202&o=svc_unhandled&search=$f_serv_desc&host_search=$f_host_name&cmd=70&select[$f_host_name%253B$f_serv_desc]&autologin=1&useralias=$userName&token=$token'><b>Acknowledge</b></a></td></tr>\n";
+    $body .= "<tr bgcolor=#eeeeee><td><b>Service:</b></td><td><font color=#0000CC><b><a href='$url/centreon/main.php?p=20201&o=svcd&host_name=$f_host_name&service_description=$f_serv_desc&autologin=1&useralias=$userAlias&token=$token'>$f_serv_desc</a></b></font></td></tr>\n";
+    $body .= "<tr bgcolor=#fefefe><td><b>Host:</b></td><td><font color=#0000CC><b><a href='$url/centreon/main.php?p=20202&o=hd&host_name=$f_host_name&autologin=1&useralias=$userAlias&token=$token'>$f_host_alias</a></b></td></tr>\n";
+    $body .= "<tr bgcolor=#fefefe><td><b>Adresse IP:</b></td><td><b>$f_host_address</b></font></td></tr>\n";
+    $body .= "<tr bgcolor=#eeeeee><td><b>Date/Temps:</b></td><td>$f_long_date UTC</td></tr>\n";
+    $body .= "<tr bgcolor=#fefefe><td><b>Informations additionnelles:</b></td><td><font color=$f_color>$f_serv_output</font></td></tr>\n";
+    $body .= "<tr bgcolor=#eeeeee><td><b>Actions:</b></td><td><a target='external' href='$url/centreon/main.php?p=202&o=svc_unhandled&search=$f_serv_desc&host_search=$f_host_name&cmd=70&select[$f_host_name%253B$f_serv_desc]&autologin=1&useralias=$userAlias&token=$token'><b>Acknowledge</b></a></td></tr>\n";
     if ($userType == "admin"){
         $body .= "</td><td valign='top'></tr></table><table border=0 cellpadding=0 cellspacing=0 width='96%'><tr bgcolor=#000055><td width='140'><b> \n";
-        $body .= "<font color=#FFFFFF>Service Summary</font></b></td><td>.</td></tr> \n";
-        $body .= "<tr bgcolor=#fefefe><td>Service <b>DOWN</b> For: </td><td> $f_downwarn<i>m</i></td></tr>\n";
-        $body .= "<tr bgcolor=#eeeeee><td>Total Warnings: </td><td> $f_totwarnings</td></tr>\n";
-        $body .= "<tr bgcolor=#fefefe><td>Total Critical: </td><td> $f_totcritical</td></tr>\n";
-        $body .= "<tr bgcolor=#eeeeee><td>Total Unknowns: </td><td> $f_totunknowns</td></tr>\n";
+        $body .= "<font color=#FFFFFF>Resumé des services</font></b></td><td>.</td></tr> \n";
+        $body .= "<tr bgcolor=#fefefe><td>Service <b>CRITIQUE</b> depuis: </td><td> $f_downwarn<i>m</i></td></tr>\n";
+        $body .= "<tr bgcolor=#eeeeee><td>Totale Avertissement: </td><td> $f_totwarnings</td></tr>\n";
+        $body .= "<tr bgcolor=#fefefe><td>Totale Critique: </td><td> $f_totcritical</td></tr>\n";
+        $body .= "<tr bgcolor=#eeeeee><td>Totale Inconnu: </td><td> $f_totunknowns</td></tr>\n";
     }    
     $body .= "</body></html> \n";
     
@@ -74,4 +85,5 @@
     /* Send eMail Now... */
     $m_true = mail($f_to, $subject, $body, $headers);
     echo $m_true;
+
 ?>
