@@ -8,7 +8,7 @@ centreon-notifications
 1. Download the scripts in the plugins directory and modify these following variables :
     * $url : URL of the Centreon Web UI ( eg. https://centreon.foo.bar:8081 )
     * $from : from email address desired
-    * $userNameForDB : user name for connection
+    * $userNameForDB : username for connection, you can find your user info at (/etc/centreon/centreon.conf.php)
     * $passwordForDB : password for connection
 2. Create auto login token for all users http://blog.centreon.com/connexion-automatique-a-linterface-centreon-autologin/?lang=fr
 3. Make the files executable.
